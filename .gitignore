@@ -1,0 +1,16 @@
+# Maven build files
+target/
+
+# Compiled output
+out/
+
+# Local SQLite database
+banking.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
