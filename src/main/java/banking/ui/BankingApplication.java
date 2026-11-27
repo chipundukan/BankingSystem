@@ -3,19 +3,19 @@ package banking.ui;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-
 import javafx.stage.Stage;
 
 public class BankingApplication extends Application {
 
     private BorderPane mainLayout;
+    private VBox sidebar;
 
     @Override
     public void start(Stage stage) {
@@ -23,147 +23,237 @@ public class BankingApplication extends Application {
         mainLayout = new BorderPane();
 
         // Create the navigation sidebar.
-        VBox sidebar = createSidebar();
+        createSidebar();
 
-        // Display the dashboard when the application starts.
+        // Display the dashboard when the application opens.
         showDashboard();
 
-        mainLayout.setLeft(sidebar);
+        Scene scene = new Scene(mainLayout, 1200, 750);
 
-        Scene scene = new Scene(mainLayout, 1000, 650);
+        // Load the external stylesheet.
+        String css = getClass().getResource("/banking.css").toExternalForm();
+        scene.getStylesheets().add(css);
 
         stage.setTitle("Banking Management System");
-        stage.setMinWidth(800);
-        stage.setMinHeight(550);
         stage.setScene(scene);
+        stage.setMinWidth(950);
+        stage.setMinHeight(650);
         stage.show();
     }
 
-    // Creates the navigation sidebar.
-    private VBox createSidebar() {
+    private void createSidebar() {
 
-        Label heading = new Label("BANKING SYSTEM");
-
-        heading.setStyle(
-                "-fx-font-size: 19px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-text-fill: white;"
-        );
-
-        Button dashboardButton = createButton("Dashboard");
-        Button customersButton = createButton("Customers");
-        Button accountsButton = createButton("Accounts");
-        Button transactionsButton = createButton("Transactions");
-
-        dashboardButton.setOnAction(e -> showDashboard());
-
-        customersButton.setOnAction(e ->
-                showSection("Customer Management"));
-
-        accountsButton.setOnAction(e ->
-                showSection("Account Management"));
-
-        transactionsButton.setOnAction(e ->
-                showSection("Transaction History"));
-
-        VBox sidebar = new VBox(
-                20,
-                heading,
-                dashboardButton,
-                customersButton,
-                accountsButton,
-                transactionsButton
-        );
-
-        sidebar.setPadding(new Insets(25));
+        sidebar = new VBox(15);
+        sidebar.getStyleClass().add("sidebar");
         sidebar.setPrefWidth(230);
 
-        sidebar.setStyle("-fx-background-color: #172554;");
+        Label brand = new Label("BANKING SYSTEM");
+        brand.getStyleClass().add("brand");
 
-        return sidebar;
+        Label menuTitle = new Label("MAIN MENU");
+        menuTitle.setStyle(
+            "-fx-text-fill: #94a3b8;" +
+            "-fx-font-size: 11px;" +
+            "-fx-font-weight: bold;"
+        );
+
+        Button dashboardButton = createNavButton("Dashboard");
+        Button customerButton = createNavButton("Customers");
+        Button accountButton = createNavButton("Accounts");
+        Button transactionButton = createNavButton("Transactions");
+
+        dashboardButton.setOnAction(event -> showDashboard());
+
+        customerButton.setOnAction(event ->
+            showSection("Customer Management"));
+
+        accountButton.setOnAction(event ->
+            showSection("Account Management"));
+
+        transactionButton.setOnAction(event ->
+            showSection("Transaction History"));
+
+        RegionSpacer spacer = new RegionSpacer();
+
+        Label footer = new Label("Banking System\nVersion 1.0");
+        footer.setStyle(
+            "-fx-text-fill: #94a3b8;" +
+            "-fx-font-size: 11px;"
+        );
+
+        sidebar.getChildren().addAll(
+            brand,
+            new Label(" "),
+            menuTitle,
+            dashboardButton,
+            customerButton,
+            accountButton,
+            transactionButton,
+            spacer,
+            footer
+        );
+
+        mainLayout.setLeft(sidebar);
     }
 
-    // Creates a navigation button.
-    private Button createButton(String text) {
+    private Button createNavButton(String text) {
 
         Button button = new Button(text);
 
-        button.setPrefWidth(180);
-        button.setAlignment(Pos.CENTER_LEFT);
-
-        button.setStyle(
-                "-fx-background-color: #1e40af;" +
-                "-fx-text-fill: white;" +
-                "-fx-font-size: 14px;" +
-                "-fx-padding: 12px;"
-        );
+        button.getStyleClass().add("nav-button");
+        button.setMaxWidth(Double.MAX_VALUE);
 
         return button;
     }
 
-    // Displays the dashboard.
     private void showDashboard() {
 
-        Label title = new Label("Dashboard");
+        VBox content = new VBox(25);
+        content.getStyleClass().add("content-area");
 
-        title.setStyle(
-                "-fx-font-size: 28px;" +
-                "-fx-font-weight: bold;"
+        Label heading = new Label("Dashboard");
+        heading.getStyleClass().add("page-title");
+
+        Label subtitle = new Label(
+            "Welcome to your Banking Management System."
+        );
+        subtitle.getStyleClass().add("page-subtitle");
+
+        VBox headingSection = new VBox(7);
+        headingSection.getChildren().addAll(heading, subtitle);
+
+        // Dashboard information cards.
+        HBox cards = new HBox(18);
+
+        VBox customerCard = createCard(
+            "CUSTOMERS",
+            "Customer Management",
+            "Register and manage customer information."
         );
 
-        Label welcome = new Label(
-                "Welcome to the Banking Management System."
+        VBox accountCard = createCard(
+            "ACCOUNTS",
+            "Account Management",
+            "Create accounts and manage balances."
         );
 
-        Label information = new Label(
-                "Use the navigation menu to manage customers, " +
-                "accounts and transactions."
+        VBox transactionCard = createCard(
+            "TRANSACTIONS",
+            "Transaction History",
+            "View recorded banking transactions."
         );
 
-        VBox content = new VBox(
-                20,
-                title,
-                welcome,
-                information
+        HBox.setHgrow(customerCard, Priority.ALWAYS);
+        HBox.setHgrow(accountCard, Priority.ALWAYS);
+        HBox.setHgrow(transactionCard, Priority.ALWAYS);
+
+        cards.getChildren().addAll(
+            customerCard,
+            accountCard,
+            transactionCard
         );
 
-        content.setPadding(new Insets(40));
+        // Quick action section.
+        Label quickActionsTitle = new Label("Quick Actions");
+        quickActionsTitle.setStyle(
+            "-fx-font-size: 19px;" +
+            "-fx-font-weight: bold;" +
+            "-fx-text-fill: #172554;"
+        );
+
+        Button manageCustomers = new Button("Manage Customers");
+        Button manageAccounts = new Button("Manage Accounts");
+        Button viewTransactions = new Button("View Transactions");
+
+        manageCustomers.setOnAction(event ->
+            showSection("Customer Management"));
+
+        manageAccounts.setOnAction(event ->
+            showSection("Account Management"));
+
+        viewTransactions.setOnAction(event ->
+            showSection("Transaction History"));
+
+        VBox actions = new VBox(15);
+        actions.getChildren().addAll(
+            manageCustomers,
+            manageAccounts,
+            viewTransactions
+        );
+
+        content.getChildren().addAll(
+            headingSection,
+            cards,
+            quickActionsTitle,
+            actions
+        );
 
         mainLayout.setCenter(content);
     }
 
-    // Displays the selected application section.
+    private VBox createCard(
+        String title,
+        String subtitle,
+        String description
+    ) {
+
+        VBox card = new VBox(12);
+
+        card.getStyleClass().add("card");
+
+        Label cardTitle = new Label(title);
+        cardTitle.getStyleClass().add("card-title");
+
+        Label cardSubtitle = new Label(subtitle);
+        cardSubtitle.setStyle(
+            "-fx-font-size: 17px;" +
+            "-fx-font-weight: bold;" +
+            "-fx-text-fill: #172554;"
+        );
+
+        Label cardDescription = new Label(description);
+        cardDescription.setWrapText(true);
+        cardDescription.getStyleClass().add("page-subtitle");
+
+        card.getChildren().addAll(
+            cardTitle,
+            cardSubtitle,
+            cardDescription
+        );
+
+        return card;
+    }
+
     private void showSection(String sectionName) {
 
-        if (sectionName.equals("Customer Management")) {
+        switch (sectionName) {
 
-            // Opens the customer management interface.
-            mainLayout.setCenter(new CustomerView());
+            case "Customer Management":
+                mainLayout.setCenter(new CustomerView());
+                break;
 
-        } else {
+            case "Account Management":
+                mainLayout.setCenter(new AccountView());
+                break;
 
-            Label title = new Label(sectionName);
+            case "Transaction History":
+                mainLayout.setCenter(new TransactionView());
+                break;
 
-            title.setStyle(
-                    "-fx-font-size: 28px;" +
-                    "-fx-font-weight: bold;"
-            );
-
-            Label message = new Label(
-                    "The " + sectionName +
-                    " interface will be implemented here."
-            );
-
-            VBox content = new VBox(20, title, message);
-
-            content.setPadding(new Insets(40));
-
-            mainLayout.setCenter(content);
+            default:
+                showDashboard();
+                break;
         }
     }
 
     public static void main(String[] args) {
-
         launch(args);
+    }
+
+    // Pushes the footer towards the bottom of the sidebar.
+    private static class RegionSpacer extends javafx.scene.layout.Region {
+        RegionSpacer() {
+            VBox.setVgrow(this, Priority.ALWAYS);
+        }
     }
 }

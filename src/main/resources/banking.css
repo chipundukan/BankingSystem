@@ -1,0 +1,212 @@
+/* =====================================
+   MODERN FINTECH BANKING THEME
+   ===================================== */
+
+.root {
+    -fx-font-family: "Segoe UI";
+    -fx-background-color: #f3f1ff;
+}
+
+/* GENERAL TEXT */
+
+.label {
+    -fx-text-fill: #26304f;
+}
+
+.page-title {
+    -fx-font-size: 29px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #24205c;
+}
+
+.page-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #8586a5;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    -fx-background-color: #211b50;
+    -fx-padding: 28px 18px;
+}
+
+.brand {
+    -fx-font-size: 23px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #d8d5f5;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 14px 16px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
+
+.nav-button:hover {
+    -fx-background-color: #39316f;
+    -fx-text-fill: white;
+}
+
+.nav-button-active {
+    -fx-background-color: #08b6a4;
+    -fx-text-fill: white;
+}
+
+/* MAIN CONTENT */
+
+.content-area {
+    -fx-background-color: #f3f1ff;
+    -fx-padding: 32px;
+    -fx-spacing: 22px;
+}
+
+/* CARDS */
+
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 16px;
+    -fx-padding: 24px;
+    -fx-border-color: #e9e6fa;
+    -fx-border-radius: 16px;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(39, 30, 90, 0.07),
+        12,
+        0.1,
+        0,
+        4
+    );
+}
+
+.card-title {
+    -fx-font-size: 14px;
+    -fx-text-fill: #8586a5;
+}
+
+.card-value {
+    -fx-font-size: 27px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #29235f;
+}
+
+/* INPUT FIELDS */
+
+.text-field,
+.combo-box {
+    -fx-background-color: #faf9ff;
+    -fx-border-color: #dedaf2;
+    -fx-border-radius: 9px;
+    -fx-background-radius: 9px;
+    -fx-padding: 11px;
+    -fx-font-size: 13px;
+}
+
+.text-field:focused,
+.combo-box:focused {
+    -fx-border-color: #08b6a4;
+    -fx-border-width: 1.5px;
+    -fx-background-color: white;
+}
+
+/* BUTTONS */
+
+.button {
+    -fx-background-color: #08b6a4;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 11px 19px;
+    -fx-background-radius: 9px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #079889;
+}
+
+.button:pressed {
+    -fx-background-color: #067d73;
+}
+
+/* TABLE */
+
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #e9e6fa;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #eeebff;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-size: 42px;
+}
+
+.table-view .column-header .label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #39316f;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #f0eef8 transparent;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #faf9ff;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #d9f7f2;
+}
+
+.table-row-cell:selected .text {
+    -fx-fill: #174d49;
+}
+
+/* MESSAGES */
+
+.message-label {
+    -fx-text-fill: #079889;
+    -fx-font-weight: bold;
+}
+
+/* CHECKBOX */
+
+.check-box {
+    -fx-text-fill: #39316f;
+}
+
+.check-box .box {
+    -fx-background-radius: 5px;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: white;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #08b6a4;
+}
+
+/* SCROLLBARS */
+
+.scroll-bar:vertical .thumb,
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #c9c3eb;
+    -fx-background-radius: 10px;
+}
+
+.scroll-bar:vertical,
+.scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
